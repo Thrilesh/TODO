@@ -31,9 +31,10 @@
                     <div class="card-body">
                         {{ task.task }}
                         <span style="position: relative; float: right;">
-                            <a class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
-                            <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                            <a class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+
+                            <a href='{% url 'mark-as-done'  task.pk%}' class="btn btn-success"><i class="fa fa-check"></i> Mark as Done</a>
+                            <a href='{% url 'delete-task'   task.pk%}' class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            <a  href=' {% url 'edit-task'  task.pk%}' class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                         </span>
                     </div>
                 </div>
@@ -41,22 +42,27 @@
                
             </div>
             <div class="col-md-5 col-lg-5">
-                <h5>Completed Tasks</h5>
+                <h5>Completed Tasks</h5>    
                 <!-- List of all the tasks that have completed -->
+                {% for task in completed_tasks %}
                 <div class="card m-1">
                     <div class="card-body">
-                        This is the completed task.
+                        {{ task.task }}
+                      
+                    <a href='{% url 'mark-as-undone'  task.pk%}' class="btn btn-danger"><i class="fa fa-check"></i> Mark as UnDone</a>
+                   
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-lg-6 p-0" style="position: absolute; bottom: 50px;">
+            <div class="col-md-6 col-lg-6 p-0" style="position: absolute; bottom: 30px;">
                 <!-- To Do Form -->
                 <form action="{% url 'add-task' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        <span style="display: flex;">
+                        <span style="display: flex; position: absolute; width:500px">
                             <input type="text" name="task" class="form-control" placeholder="Add a task">
                             <button type="submit" class="btn btn-primary" style="width: 200px;"><i class="fa fa-plus"></i> Add</button>
                         </span>
